@@ -7,11 +7,13 @@ import HostChangeManagement from './pages/HostChangeManagement'
 import InefficientHosts from './pages/InefficientHosts'
 import PublicPool from './pages/PublicPool'
 import MultiDimensionalMetrics from './pages/MultiDimensionalMetrics'
+import MultiDimensionalFiltering from './pages/MultiDimensionalFiltering'
 import './App.css'
 
 const { Header, Content, Sider } = Layout
 
-const AppMenu: React.FC = () => {
+// Separate component for the menu to use useNavigate hook
+const NavigationMenu: React.FC = () => {
   const navigate = useNavigate()
   
   const menuItems = [
@@ -39,9 +41,13 @@ const AppMenu: React.FC = () => {
       key: 'multi-dimensional-metrics',
       label: '多维度指标管理',
     },
+    {
+      key: 'multi-dimensional-filtering',
+      label: '多维度筛选',
+    },
   ]
   
-  const handleClick = ({ key }: { key: string }) => {
+  const handleMenuClick = ({ key }: { key: string }) => {
     switch (key) {
       case 'dashboard':
         navigate('/dashboard')
@@ -61,6 +67,9 @@ const AppMenu: React.FC = () => {
       case 'multi-dimensional-metrics':
         navigate('/multi-dimensional-metrics')
         break
+      case 'multi-dimensional-filtering':
+        navigate('/multi-dimensional-filtering')
+        break
       default:
         navigate('/')
     }
@@ -72,7 +81,7 @@ const AppMenu: React.FC = () => {
       defaultSelectedKeys={['dashboard']}
       style={{ height: '100%', borderRight: 0 }}
       items={menuItems}
-      onClick={handleClick}
+      onClick={handleMenuClick}
     />
   )
 }
@@ -91,7 +100,7 @@ const App: React.FC = () => {
         </Header>
         <Layout>
           <Sider width={200} style={{ background: colorBgContainer }}>
-            <AppMenu />
+            <NavigationMenu />
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>
             <Content
@@ -111,6 +120,7 @@ const App: React.FC = () => {
                 <Route path="/inefficient-hosts" element={<InefficientHosts />} />
                 <Route path="/public-pool" element={<PublicPool />} />
                 <Route path="/multi-dimensional-metrics" element={<MultiDimensionalMetrics />} />
+                <Route path="/multi-dimensional-filtering" element={<MultiDimensionalFiltering />} />
               </Routes>
             </Content>
           </Layout>
